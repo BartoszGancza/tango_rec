@@ -1,0 +1,26 @@
+version: "3.2"
+
+services:
+  backend:
+    stdin_open: true
+    tty: true
+    container_name: tangoapp-backend
+    build:
+      dockerfile: ./Dockerfile
+    volumes:
+      - .:/opt/app
+    command: ./scripts/run.sh
+    ports:
+      - "8000:8000"
+    env_file:
+      - .env
+    links:
+      - db:db
+  db:
+    container_name: tangoapp-db
+    image: postgres:17
+    ports:
+      - "5432:5432"
+    restart: on-failure
+    env_file:
+      - .env

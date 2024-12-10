@@ -1,0 +1,5 @@
+SQLAlchemy
+pytest
+fastapi[standard]
+psycopg2-binary
+faker
