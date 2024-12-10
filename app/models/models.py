@@ -28,7 +28,7 @@ class UserModel(Base):
     uuid = Column(
         UUID(as_uuid=True), primary_key=True, default=uuid.uuid4, index=True
     )
-    company_id = Column(UUID(as_uuid=True))
+    company_id = Column(UUID(as_uuid=True), index=True)
     conference_rooms = relationship(
         "ConferenceRoomModel", back_populates="manager"
     )
@@ -49,7 +49,7 @@ class CalendarEventModel(Base):
     uuid = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     owner = relationship("UserModel", back_populates="calendar_events")
     owner_id = Column(UUID(as_uuid=True), ForeignKey("users.uuid"), index=True)
-    company_id = Column(UUID(as_uuid=True), nullable=False)
+    company_id = Column(UUID(as_uuid=True), nullable=False, index=True)
     location = relationship(
         "ConferenceRoomModel",
         back_populates="calendar_events",
