@@ -1,5 +1,6 @@
 from fastapi import APIRouter, Depends, HTTPException
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
+from sqlalchemy.orm import Session
 from starlette import status
 
 from app.schemas.entities import UserSchema
@@ -14,13 +15,12 @@ router = APIRouter(
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="auth/token")
 
 
-async def decode_token(token):
-    db = next(get_db())
+async def decode_token(token: str, db: Session):
     return await AuthService(db=db).get_user_by_token(username=token)
 
 
-async def get_user(token: oauth2_scheme = Depends()):
-    user = await decode_token(token)
+async def get_user(token: oauth2_scheme = Depends(), db: get_db = Depends()):
+    user = await decode_token(token=token, db=db)
     if not user:
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
