@@ -33,6 +33,8 @@ fastapi dev app/main.py
 There is a Python script that will help to fill in the database with some test data.
 **It is important to generate the data in the order of Users -> Conference Rooms -> Calendar Events**.
 
+To use the script install requirements in your local environment and start the application.
+
 The options are as follows:
 
 #### Generating Users
